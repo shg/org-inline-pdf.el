@@ -1,0 +1,18 @@
+# -*- eval: (visual-line-mode 1) -*-
+#+STARTUP: showall
+
+* org-inline-pdf
+
+Org-inline-pdf enables inline PDF preview in Org buffers.
+
+** Installation
+
+Download org-inline-pdf.el into somewhere in your local directory and install it with the following.
+
+#+BEGIN_SRC emacs-lisp
+(package-install-file "/path-to-download-dir/org-inline-pdf.el")
+#+END_SRC
+
+** Usage
+
+You can just place links to PDF files using double brackets. Linked PDF files will be displayed inline within Org buffer by ~org-toggle-inline-images~ command, in the same way as the common image formats like jpg or png are.
