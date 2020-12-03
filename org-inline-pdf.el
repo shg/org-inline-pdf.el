@@ -6,7 +6,7 @@
 ;; Maintainer: Shigeaki Nishina
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
-;; Package-Requires: ((emacs "25.1") (org "9.4"))
+;; Package-Requires: ((emacs "25.1") (org "9.3"))
 ;; Version: 0.1
 ;; Keywords: Org
 
@@ -47,14 +47,15 @@
 (defun org-inline-pdf--make-preview-for-pdf (original-org--create-inline-image &rest arguments)
   "Make a SVG preview when the inline image is a PDF.
 This function is to be used as an `around' advice to
-`org--create-inline-image'."
+`org--create-inline-image'. The original function is passed in
+ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
   (let ((file (car arguments)))
     (apply original-org--create-inline-image
 	   (cons
 	    (if (member (file-name-extension file) '("pdf" "PDF"))
-		(let ((pdf (org-babel-temp-file "org-inline-pdf-")))
-		  (call-process org-inline-pdf-make-preview-program nil nil nil file pdf)
-		  pdf)
+		(let ((svg (org-babel-temp-file "org-inline-pdf-")))
+		  (call-process org-inline-pdf-make-preview-program nil nil nil file svg)
+		  svg)
 	      file)
 	    (cdr arguments)))))
 
