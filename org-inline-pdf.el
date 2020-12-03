@@ -8,7 +8,7 @@
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.3"))
 ;; Version: 0.1
-;; Keywords: Org
+;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
 
