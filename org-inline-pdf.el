@@ -59,16 +59,14 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
 	      file)
 	    (cdr arguments)))))
 
-(with-eval-after-load 'org
-  (add-to-list 'image-file-name-extensions "pdf")
-  (advice-add #'org--create-inline-image :around #'org-inline-pdf--make-preview-for-pdf))
+(add-to-list 'image-file-name-extensions "pdf")
+(advice-add #'org--create-inline-image :around #'org-inline-pdf--make-preview-for-pdf)
 
 ;; Add .pdf to the image types embeded inline in exported html
 ;; files. The other types are copied from ox-html.el and need to be
 ;; updated if the original code is changed.
-(with-eval-after-load 'ox-html
-  (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
-	(regexp-opt '(".jpeg" ".jpg" ".png" ".gif" ".svg" ".pdf"))))
+(setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
+      (regexp-opt '(".jpeg" ".jpg" ".png" ".gif" ".svg" ".pdf")))
 
 (provide 'org-inline-pdf)
 
