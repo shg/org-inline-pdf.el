@@ -7,6 +7,8 @@ Org-inline-pdf enables inline PDF preview in Org buffers.
 
 ** Installation
 
+You need to have [[https://cityinthesky.co.uk/opensource/pdf2svg/][pdf2svg]] installed in exec-path.
+
 Download org-inline-pdf.el into somewhere in your local directory and install it with the following.
 
 #+BEGIN_SRC emacs-lisp
@@ -15,4 +17,4 @@ Download org-inline-pdf.el into somewhere in your local directory and install it
 
 ** Usage
 
-You can just place links to PDF files using double brackets. Linked PDF files will be displayed inline within Org buffer by ~org-toggle-inline-images~ command, in the same way as the common image formats like jpg or png are.
+You can just place links to PDF files using double brackets. Linked PDF files will be displayed inline in the Org buffer by ~org-display-inline-images~ command.
