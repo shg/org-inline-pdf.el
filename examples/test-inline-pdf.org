@@ -1,0 +1,17 @@
+#+STARTUP: inlineimages
+
+* Inline PDF
+
+#+BEGIN_SRC org
+[[./Emacs-logo.pdf]]
+#+END_SRC
+
+[[./Emacs-logo.pdf]]
+
+* Inline SVG
+
+#+BEGIN_SRC org
+[[./Emacs-logo.svg]]
+#+END_SRC
+
+[[./Emacs-logo.svg]]
