@@ -1,4 +1,4 @@
-;;; org-inline-pdf.el --- Inline PDF for Org -*- lexical-binding: t -*-
+;;; org-inline-pdf.el --- Inline PDF previewing for Org -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2020 Shigeaki Nishina
 
