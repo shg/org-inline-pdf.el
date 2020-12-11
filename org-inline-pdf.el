@@ -54,7 +54,8 @@
 ;;
 ;;; Code:
 
-(require 'org)
+(eval-when-compile
+  (require 'org))
 (require 'ox-html)
 
 (defvar org-inline-pdf-make-preview-program "pdf2svg")
