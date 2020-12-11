@@ -6,8 +6,8 @@
 ;; Maintainer: Shigeaki Nishina
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
-;; Package-Requires: ((emacs "25.1") (org "9.3"))
-;; Version: 0.1
+;; Package-Requires: ((emacs "25.1") (org "9.4"))
+;; Version: 0.2
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -33,10 +33,25 @@
 
 ;;; Usage:
 
-;; Requires pdf2svg command installed in exec-path.
+;; You need to have pdf2svg command installed in exec-path.
 ;;
-;; https://cityinthesky.co.uk/opensource/pdf2svg/
-
+;; pdf2svg: https://cityinthesky.co.uk/opensource/pdf2svg/
+;;
+;; Download org-inline-pdf.el and install it using package.el
+;;
+;;   (package-install-file "/path-to-download-dir/org-inline-pdf.el")
+;;
+;; Require it in your init file.
+;;
+;;   (require 'org-inline-pdf)
+;;
+;; Now image links in Org buffers are displayed inline.
+;;
+;; Also, when the file is exported to HTML using ox-html, PDF will be
+;; embedded using img tag. Note that PDF with img tag is not standard
+;; and will be rendered only in particular browsers.  Safari.app is
+;; only the one I know.
+;;
 ;;; Code:
 
 (require 'org)
@@ -47,7 +62,7 @@
 (defun org-inline-pdf--make-preview-for-pdf (original-org--create-inline-image &rest arguments)
   "Make a SVG preview when the inline image is a PDF.
 This function is to be used as an `around' advice to
-`org--create-inline-image'. The original function is passed in
+`org--create-inline-image'.  The original function is passed in
 ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
   (let ((file (car arguments)))
     (apply original-org--create-inline-image
