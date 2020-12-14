@@ -7,7 +7,7 @@
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.2
+;; Version: 0.2a
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -76,7 +76,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
 	    (cdr arguments)))))
 
 (add-to-list 'image-file-name-extensions "pdf")
-(advice-add #'org--create-inline-image :around #'org-inline-pdf--make-preview-for-pdf)
+(advice-add 'org--create-inline-image :around #'org-inline-pdf--make-preview-for-pdf)
 
 ;; Add .pdf to the image types embeded inline in exported html
 ;; files. The other types are copied from ox-html.el and need to be
