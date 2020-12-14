@@ -7,7 +7,7 @@
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.2a
+;; Version: 0.3
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -68,7 +68,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
   (let ((file (car arguments)))
     (apply original-org--create-inline-image
 	   (cons
-	    (if (member (file-name-extension file) '("pdf" "PDF"))
+	    (if (equalp (file-name-extension file) "pdf")
 		(let ((svg (org-babel-temp-file "org-inline-pdf-")))
 		  (call-process org-inline-pdf-make-preview-program nil nil nil file svg)
 		  svg)
