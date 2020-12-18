@@ -54,8 +54,7 @@
 ;;
 ;;; Code:
 
-(eval-when-compile
-  (require 'org))
+(require 'org)
 (require 'ox-html)
 
 (defvar org-inline-pdf-make-preview-program "pdf2svg")
@@ -68,7 +67,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
   (let ((file (car arguments)))
     (apply original-org--create-inline-image
 	   (cons
-	    (if (equalp (file-name-extension file) "pdf")
+	    (if (member (file-name-extension file) '("pdf" "PDF"))
 		(let ((svg (org-babel-temp-file "org-inline-pdf-")))
 		  (call-process org-inline-pdf-make-preview-program nil nil nil file svg)
 		  svg)
