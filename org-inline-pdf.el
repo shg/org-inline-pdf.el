@@ -31,7 +31,7 @@
 
 ;; Enable inline PDF preview in Org buffers.
 
-;; Usage:
+;;; Usage:
 
 ;; You need to have pdf2svg command installed in exec-path.
 ;;
