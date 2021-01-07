@@ -7,7 +7,7 @@
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.2
+;; Version: 0.2a
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -45,7 +45,7 @@
 ;; Add the following line in your init file to automatically enable
 ;; the feature in newly opened Org buffers.
 ;;
-;;   (add-hook 'org-mode-hook 'org-inline-pdf-mode)
+;;   (add-hook 'org-mode-hook #'org-inline-pdf-mode)
 ;;
 ;; Links to PDF files in Org buffers are now displayed inline.
 ;;
@@ -88,17 +88,22 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
   nil "" nil
   (cond
    (org-inline-pdf-mode
-    (message "Enable org-inline-pdf-mode")
+    (if (called-interactively-p 'interactive)
+	(message "org-inline-pdf-mode enabled"))
     (add-to-list 'image-file-name-extensions "pdf")
     (advice-add 'org--create-inline-image :around #'org-inline-pdf--make-preview-for-pdf)
     (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
-	  (regexp-opt (cons "pdf" org-inline-pdf--org-html-image-extentions-for-file))))
+	  (regexp-opt (cons "pdf" org-inline-pdf--org-html-image-extentions-for-file)))
+    (org-display-inline-images))
    (t
-    (message "Disable org-inline-pdf-mode")
+    (if (called-interactively-p 'interactive)
+	(message "org-inline-pdf-mode disabled"))
     (setq image-file-name-extensions (delete "pdf" image-file-name-extensions))
     (advice-remove 'org--create-inline-image #'org-inline-pdf--make-preview-for-pdf)
     (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
-	  (regexp-opt org-inline-pdf--org-html-image-extentions-for-file)))))
+	  (regexp-opt org-inline-pdf--org-html-image-extentions-for-file))
+    (org-remove-inline-images)
+    (org-display-inline-images))))
 
 (provide 'org-inline-pdf)
 
