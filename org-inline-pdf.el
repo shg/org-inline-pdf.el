@@ -7,7 +7,7 @@
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.2a
+;; Version: 0.2b
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -93,8 +93,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
     (add-to-list 'image-file-name-extensions "pdf")
     (advice-add 'org--create-inline-image :around #'org-inline-pdf--make-preview-for-pdf)
     (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
-	  (regexp-opt (cons "pdf" org-inline-pdf--org-html-image-extentions-for-file)))
-    (org-display-inline-images))
+	  (regexp-opt (cons "pdf" org-inline-pdf--org-html-image-extentions-for-file))))
    (t
     (if (called-interactively-p 'interactive)
 	(message "org-inline-pdf-mode disabled"))
@@ -102,8 +101,8 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
     (advice-remove 'org--create-inline-image #'org-inline-pdf--make-preview-for-pdf)
     (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
 	  (regexp-opt org-inline-pdf--org-html-image-extentions-for-file))
-    (org-remove-inline-images)
-    (org-display-inline-images))))
+    (org-remove-inline-images)))
+  (org-display-inline-images))
 
 (provide 'org-inline-pdf)
 
