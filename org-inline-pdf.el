@@ -61,7 +61,7 @@
 
 (defvar org-inline-pdf-make-preview-program "pdf2svg")
 
-(defconst org-inline-pdf--org-html-image-extentions-for-file
+(defconst org-inline-pdf--org-html-image-extensions-for-file
   ;; This list is taken from the definition of the variable
   ;; org-html-inline-image-rules defined in ox-html.el and needs to be
   ;; updated if the original code is changed.
@@ -93,14 +93,14 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
     (add-to-list 'image-file-name-extensions "pdf")
     (advice-add 'org--create-inline-image :around #'org-inline-pdf--make-preview-for-pdf)
     (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
-	  (regexp-opt (cons "pdf" org-inline-pdf--org-html-image-extentions-for-file))))
+	  (regexp-opt (cons "pdf" org-inline-pdf--org-html-image-extensions-for-file))))
    (t
     (if (called-interactively-p 'interactive)
 	(message "org-inline-pdf-mode disabled"))
     (setq image-file-name-extensions (delete "pdf" image-file-name-extensions))
     (advice-remove 'org--create-inline-image #'org-inline-pdf--make-preview-for-pdf)
     (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
-	  (regexp-opt org-inline-pdf--org-html-image-extentions-for-file))
+	  (regexp-opt org-inline-pdf--org-html-image-extensions-for-file))
     (org-remove-inline-images)))
   (org-display-inline-images))
 
