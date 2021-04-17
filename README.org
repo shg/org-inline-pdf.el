@@ -9,11 +9,19 @@ Org-inline-pdf enables inline PDF preview in Org buffers.
 
 ** Installation
 
-This works only with Org 9.4 or later. You need to have [[https://cityinthesky.co.uk/opensource/pdf2svg/][pdf2svg]] installed in =exec-path=.
+This works only with Org 9.4 or later. You need to have [[https://cityinthesky.co.uk/opensource/pdf2svg/][pdf2svg]] installed in =exec-path=. You will be able to install it using a package management system, such as Homebrew or APT.
 
-You can install this package from MELPA. The package name is =org-inline-pdf=. For manual installation, download org-inline-pdf.el into somewhere in your local directory and install it with ~M-x package-install-file~.
+#+BEGIN_SRC sh
+# On macOS
+brew install pdf2svg
 
-Enable this feature in an Org buffer with ~M-x org-inline-pdf-mode~. Add the following line in your init file to automatically enable the feature in newly opened Org buffers.
+# On Debian Linux
+sudo apt install pdf2svg
+#+END_SRC
+
+You can install org-inline-pdf from MELPA. For manual installation, download =org-inline-pdf.el= into somewhere in your local directory and install it with =M-x package-install-file=.
+
+Enable this feature in an Org buffer with =M-x org-inline-pdf-mode=. Add the following line to your init file to automatically enable the feature in newly opened Org buffers.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook #'org-inline-pdf-mode)
@@ -25,4 +33,4 @@ You can just place links to PDF files using double brackets like =[[./figs/plot.
 
 *** Inline PDF in exported HTML file
 
-This package also makes Org's HTML exporter ox-html to embed linked PDF files as images using =img= tag. Note that inline PDF using img tag is not standard and will be rendered only in particular browsers.  Safari.app is only the one I know.
+This package also makes Org's HTML exporter ox-html to embed linked PDF files as images using =img= tag. Note that inline PDF using =img= tag is not standard and will be rendered only in particular browsers.  Safari.app is only the one I know.
