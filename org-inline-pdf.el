@@ -7,7 +7,7 @@
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.2b
+;; Version: 0.2c
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -65,7 +65,7 @@
   ;; This list is taken from the definition of the variable
   ;; org-html-inline-image-rules defined in ox-html.el and needs to be
   ;; updated if the original code is changed.
-  '(".jpeg" ".jpg" ".png" ".gif" ".svg"))
+  '(".jpeg" ".jpg" ".png" ".gif" ".svg" ".webp"))
 
 (defun org-inline-pdf--make-preview-for-pdf (original-org--create-inline-image &rest arguments)
   "Make a SVG preview when the inline image is a PDF.
