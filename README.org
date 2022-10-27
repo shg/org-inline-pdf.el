@@ -34,3 +34,7 @@ You can just place links to PDF files using double brackets like =[[./figs/plot.
 *** Inline PDF in exported HTML file
 
 This package also makes Org's HTML exporter ox-html to embed linked PDF files as images using =img= tag. Note that inline PDF using =img= tag is not standard and will be rendered only in particular browsers.  Safari.app is only the one I know.
+
+** Known issues
+
+Users of [[https://github.com/jkitchin/scimax][Scimax]] need to turn off a feature of scimax-org-images with =scimax-toggle-image-advice= for org-inine-pdf to work. See [[/../../issues/5][#5]].
