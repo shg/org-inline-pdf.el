@@ -67,17 +67,36 @@
   ;; updated if the original code is changed.
   '(".jpeg" ".jpg" ".png" ".gif" ".svg" ".webp"))
 
+(defun org-inline-pdf--get-page-number ()
+  "Determine the page number of the pdf.
+
+You can use `#+attr_org: :page NUM' to specify the page number."
+  (let* ((case-fold-search t)
+         (datum (org-element-context))
+         (par (org-element-lineage datum '(paragraph)))
+         (attr-re "^[ \t]*#\\+attr_.*?: +.*?:page +\\(\\S-+\\)")
+         (par-end (org-element-property :post-affiliated par))
+         (attr-page-num
+          (if (and par
+                   (org-with-point-at
+                       (org-element-property :begin par)
+                     (re-search-forward attr-re par-end t)))
+              (match-string-no-properties 1)
+            "1")))
+    attr-page-num))
+
 (defun org-inline-pdf--make-preview-for-pdf (original-org--create-inline-image &rest arguments)
   "Make a SVG preview when the inline image is a PDF.
 This function is to be used as an `around' advice to
 `org--create-inline-image'.  The original function is passed in
 ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
-  (let ((file (car arguments)))
+  (let ((file (car arguments))
+        (page-num (org-inline-pdf--get-page-number)))
     (apply original-org--create-inline-image
 	   (cons
 	    (if (member (file-name-extension file) '("pdf" "PDF"))
 		(let ((svg (org-babel-temp-file "org-inline-pdf-")))
-		  (call-process org-inline-pdf-make-preview-program nil nil nil file svg)
+		  (call-process org-inline-pdf-make-preview-program nil nil nil file svg page-num)
 		  svg)
 	      file)
 	    (cdr arguments)))))
