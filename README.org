@@ -9,7 +9,7 @@ Org-inline-pdf enables inline PDF preview in Org buffers.
 
 ** Installation
 
-This works only with Org 9.4 or later. You need to have [[https://cityinthesky.co.uk/opensource/pdf2svg/][pdf2svg]] installed in =exec-path=. You will be able to install it using a package management system, such as Homebrew or APT.
+This program works only with Org 9.4 or later. You need to have [[https://cityinthesky.co.uk/opensource/pdf2svg/][pdf2svg]] installed in =exec-path=. You can install it using a package management system like Homebrew or APT.
 
 #+BEGIN_SRC sh
 # On macOS
@@ -29,7 +29,14 @@ Enable this feature in an Org buffer with =M-x org-inline-pdf-mode=. Add the fol
 
 ** Usage
 
-You can just place links to PDF files using double brackets like =[[./figs/plot.pdf]]= in Org buffers. Linked PDF files will be displayed inline in the Org buffer by =org-display-inline-images= command.
+You can place links to PDF files in the same way as ordinary inline images using double brackets like =[[./figs/plot.pdf]]= in Org buffers. Linked PDF files will be displayed inline by =org-display-inline-images= command.
+
+For a multiple-page PDF, the first page is shown by default. You can specify the page to show using =:page= attribute for the link. The following is an example of specifying the page along with the display size.
+
+#+BEGIN_SRC org
+,#+ATTR_ORG: :width 40% :page 3
+[[./docs/report.pdf]]
+#+END_SRC
 
 *** Inline PDF in exported HTML file
 
