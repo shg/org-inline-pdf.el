@@ -61,6 +61,9 @@
 
 (defvar org-inline-pdf-make-preview-program "pdf2svg")
 
+(defvar org-inline-pdf-cache-directory (org-babel-temp-directory)
+  "The directory that saves produced preview images.")
+
 (defconst org-inline-pdf--org-html-image-extensions-for-file
   ;; This list is taken from the definition of the variable
   ;; org-html-inline-image-rules defined in ox-html.el and needs to be
@@ -95,8 +98,17 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
     (apply original-org--create-inline-image
 	   (cons
 	    (if (member (file-name-extension file) '("pdf" "PDF"))
-		(let ((svg (org-babel-temp-file "org-inline-pdf-")))
-		  (call-process org-inline-pdf-make-preview-program nil nil nil file svg page-num)
+		(let ((svg (expand-file-name
+                            (concat "org-inline-pdf-"
+                                    (md5 (format "%s:%s" file page-num)))
+                            org-inline-pdf-cache-directory)))
+                  (when (or (not (file-exists-p svg))
+                            (time-less-p (file-attribute-modification-time
+                                          (file-attributes svg))
+                                         (file-attribute-modification-time
+                                          (file-attributes file))))
+                    (call-process org-inline-pdf-make-preview-program
+                                  nil nil nil file svg page-num))
 		  svg)
 	      file)
 	    (cdr arguments)))))
