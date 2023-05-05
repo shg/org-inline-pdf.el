@@ -21,7 +21,7 @@
 ;;
 ;; This program is distributed in the hope that it will be useful, but
 ;; WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
 ;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
@@ -75,17 +75,17 @@
 
 You can use `#+attr_org: :page NUM' to specify the page number."
   (let* ((case-fold-search t)
-         (datum (org-element-context))
-         (par (org-element-lineage datum '(paragraph)))
-         (attr-re "^[ \t]*#\\+attr_.*?: +.*?:page +\\(\\S-+\\)")
-         (par-end (org-element-property :post-affiliated par))
-         (attr-page-num
-          (if (and par
-                   (org-with-point-at
-                       (org-element-property :begin par)
-                     (re-search-forward attr-re par-end t)))
-              (match-string-no-properties 1)
-            "1")))
+	 (datum (org-element-context))
+	 (par (org-element-lineage datum '(paragraph)))
+	 (attr-re "^[ \t]*#\\+attr_.*?: +.*?:page +\\(\\S-+\\)")
+	 (par-end (org-element-property :post-affiliated par))
+	 (attr-page-num
+	  (if (and par
+		   (org-with-point-at
+		       (org-element-property :begin par)
+		     (re-search-forward attr-re par-end t)))
+	      (match-string-no-properties 1)
+	    "1")))
     attr-page-num))
 
 (defun org-inline-pdf--make-preview-for-pdf (original-org--create-inline-image &rest arguments)
@@ -94,21 +94,21 @@ This function is to be used as an `around' advice to
 `org--create-inline-image'.  The original function is passed in
 ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
   (let ((file (car arguments))
-        (page-num (org-inline-pdf--get-page-number)))
+	(page-num (org-inline-pdf--get-page-number)))
     (apply original-org--create-inline-image
 	   (cons
 	    (if (member (file-name-extension file) '("pdf" "PDF"))
 		(let ((svg (expand-file-name
-                            (concat "org-inline-pdf-"
-                                    (md5 (format "%s:%s" file page-num)))
-                            org-inline-pdf-cache-directory)))
-                  (when (or (not (file-exists-p svg))
-                            (time-less-p (file-attribute-modification-time
-                                          (file-attributes svg))
-                                         (file-attribute-modification-time
-                                          (file-attributes file))))
-                    (call-process org-inline-pdf-make-preview-program
-                                  nil nil nil file svg page-num))
+			    (concat "org-inline-pdf-"
+				    (md5 (format "%s:%s" file page-num)))
+			    org-inline-pdf-cache-directory)))
+		  (when (or (not (file-exists-p svg))
+			    (time-less-p (file-attribute-modification-time
+					  (file-attributes svg))
+					 (file-attribute-modification-time
+					  (file-attributes file))))
+		    (call-process org-inline-pdf-make-preview-program
+				  nil nil nil file svg page-num))
 		  svg)
 	      file)
 	    (cdr arguments)))))
