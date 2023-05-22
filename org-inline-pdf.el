@@ -106,10 +106,8 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
 				    (md5 (format "%s:%s" file page-num)))
 			    org-inline-pdf-cache-directory)))
 		  (when (or (not (file-exists-p svg))
-			    (time-less-p (file-attribute-modification-time
-					  (file-attributes svg))
-					 (file-attribute-modification-time
-					  (file-attributes file))))
+			    (time-less-p (nth 5 (file-attributes svg))
+					 (nth 5 (file-attributes file))))
 		    (call-process org-inline-pdf-make-preview-program
 				  nil nil nil file svg page-num))
 		  svg)
