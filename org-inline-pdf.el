@@ -61,7 +61,10 @@
 
 (defvar org-inline-pdf-make-preview-program "pdf2svg")
 
-(defvar org-inline-pdf-cache-directory (org-babel-temp-directory)
+(defvar org-babel-temporary-directory)
+(defvar org-inline-pdf-cache-directory (if (fboundp 'org-babel-temp-directory)
+					   (org-babel-temp-directory)
+					 org-babel-temporary-directory)
   "The directory that saves produced preview images.")
 
 (defconst org-inline-pdf--org-html-image-extensions-for-file
