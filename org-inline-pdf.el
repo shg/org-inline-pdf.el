@@ -1,13 +1,13 @@
 ;;; org-inline-pdf.el --- Inline PDF previewing for Org -*- lexical-binding: t -*-
 
-;; Copyright (C) 2020 Shigeaki Nishina
+;; Copyright (C) 2020-2023 Shigeaki Nishina
 
 ;; Author: Shigeaki Nishina
 ;; Maintainer: Shigeaki Nishina
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.4a
+;; Version: 0.4b
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -122,7 +122,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
 ;;;###autoload
 (define-minor-mode org-inline-pdf-mode
   "Toggle inline previewing of PDF images in Org buffer."
-  nil "" nil
+  :init-value nil :lighter "" :keymap nil
   (cond
    (org-inline-pdf-mode
     (if (called-interactively-p 'interactive)
