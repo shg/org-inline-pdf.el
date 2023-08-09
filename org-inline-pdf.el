@@ -68,7 +68,7 @@
 (defun org-inline-pdf-cache-directory ()
   "Return temp directory for caching preview images."
   (or org-inline-pdf-cache-directory
-      (if (fboundp 'org-babel-temp-directory)
+      (if (eval-when-compile (fboundp 'org-babel-temp-directory))
 	  (org-babel-temp-directory)
 	org-babel-temporary-directory)))
 
