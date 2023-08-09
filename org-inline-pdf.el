@@ -1,13 +1,13 @@
 ;;; org-inline-pdf.el --- Inline PDF previewing for Org -*- lexical-binding: t -*-
 
-;; Copyright (C) 2020 Shigeaki Nishina
+;; Copyright (C) 2020-2023 Shigeaki Nishina
 
 ;; Author: Shigeaki Nishina
 ;; Maintainer: Shigeaki Nishina
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.4a
+;; Version: 0.4b
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -59,13 +59,18 @@
 (require 'org)
 (require 'ox-html)
 
+(defvar org-babel-temporary-directory)
+
 (defvar org-inline-pdf-make-preview-program "pdf2svg")
 
-(defvar org-babel-temporary-directory)
-(defvar org-inline-pdf-cache-directory (if (fboundp 'org-babel-temp-directory)
-					   (org-babel-temp-directory)
-					 org-babel-temporary-directory)
-  "The directory that saves produced preview images.")
+(defvar org-inline-pdf-cache-directory nil)
+
+(defun org-inline-pdf-cache-directory ()
+  "Return temp directory for caching preview images."
+  (or org-inline-pdf-cache-directory
+      (if (fboundp 'org-babel-temp-directory)
+	  (org-babel-temp-directory)
+	org-babel-temporary-directory)))
 
 (defconst org-inline-pdf--org-html-image-extensions-for-file
   ;; This list is taken from the definition of the variable
@@ -104,7 +109,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
 		(let ((svg (expand-file-name
 			    (concat "org-inline-pdf-"
 				    (md5 (format "%s:%s" file page-num)))
-			    org-inline-pdf-cache-directory)))
+			    (org-inline-pdf-cache-directory))))
 		  (when (or (not (file-exists-p svg))
 			    (time-less-p (nth 5 (file-attributes svg))
 					 (nth 5 (file-attributes file))))
@@ -117,7 +122,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
 ;;;###autoload
 (define-minor-mode org-inline-pdf-mode
   "Toggle inline previewing of PDF images in Org buffer."
-  nil "" nil
+  :init-value nil :lighter "" :keymap nil
   (cond
    (org-inline-pdf-mode
     (if (called-interactively-p 'interactive)
