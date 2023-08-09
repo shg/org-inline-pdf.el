@@ -59,14 +59,18 @@
 (require 'org)
 (require 'ox-html)
 
+(defvar org-babel-temporary-directory)
+
 (defvar org-inline-pdf-make-preview-program "pdf2svg")
 
-(defvar org-babel-temporary-directory)
+(defvar org-inline-pdf-cache-directory nil)
+
 (defun org-inline-pdf-cache-directory ()
   "Return temp directory for caching preview images."
-  (if (fboundp 'org-babel-temp-directory)
-      (org-babel-temp-directory)
-    org-babel-temporary-directory))
+  (or org-inline-pdf-cache-directory
+      (if (fboundp 'org-babel-temp-directory)
+	  (org-babel-temp-directory)
+	org-babel-temporary-directory)))
 
 (defconst org-inline-pdf--org-html-image-extensions-for-file
   ;; This list is taken from the definition of the variable
