@@ -7,7 +7,7 @@
 ;; Created: November 30, 2020
 ;; URL: https://github.com/shg/org-inline-pdf.el
 ;; Package-Requires: ((emacs "25.1") (org "9.4"))
-;; Version: 0.5
+;; Version: 0.6
 ;; Keywords: org, outlines, hypermedia
 
 ;; This file is not part of GNU Emacs.
@@ -138,8 +138,7 @@ ORIGINAL-ORG--CREATE-INLINE-IMAGE and arguments in ARGUMENTS."
     (advice-remove 'org--create-inline-image #'org-inline-pdf--make-preview-for-pdf)
     (setf (alist-get "file" org-html-inline-image-rules nil t 'string=)
 	  (regexp-opt org-inline-pdf--org-html-image-extensions-for-file))
-    (org-remove-inline-images)))
-  (org-display-inline-images))
+    (org-remove-inline-images))))
 
 (provide 'org-inline-pdf)
 
