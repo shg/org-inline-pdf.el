@@ -33,14 +33,14 @@ You can place links to PDF files in the same way as ordinary inline images using
 
 For a multiple-page PDF, the first page is shown by default. You can specify the page to show using =:page= attribute for the link. The following is an example of specifying the page along with the display size.
 
-Previous versions of org-inline-pdf display all images in the buffer when the minor mode is turned on. Versions 0.6 and later do not automatically do this by default. To get the similar behavior as before, set =org-startup-with-inline-images= to non-nil in your init file. You can also set `inlineimages` or `noinlineimages` in the `STARTUP` option of the file, which overrides the global setting.
-
 #+BEGIN_SRC org
 ,#+ATTR_ORG: :width 40% :page 3
 [[./docs/report.pdf]]
 #+END_SRC
 
 =org-inline-pdf.el= saves preview images in a temporary directory by default, which is removed on Emacs shutdown. To make images persist between Emacs sessions, you can change the variable =org-inline-pdf-cache-directory=.
+
+Previous versions of org-inline-pdf display all images in the buffer when the minor mode is turned on. Versions 0.6 and later do not automatically do this by default. To get the similar behavior as before, set =org-startup-with-inline-images= to non-nil in your init file. You can also set `inlineimages` or `noinlineimages` in the `STARTUP` option of the file, which overrides the global setting.
 
 *** Inline PDF in exported HTML file
 
